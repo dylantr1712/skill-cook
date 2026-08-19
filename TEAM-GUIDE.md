@@ -1,6 +1,6 @@
 # Claude Code Skills — Team Guide
 
-A shared library of **29 reusable workflows** for Claude Code, tuned for our analytics-engineering stack (SQL · dbt · Snowflake) and our tooling (GitHub, Jira).
+A shared library of **28 reusable workflows** for Claude Code, tuned for our analytics-engineering stack (SQL · dbt · Snowflake) and our tooling (GitHub, Jira).
 
 ## What is a "skill"?
 
@@ -8,7 +8,7 @@ A skill is a saved instruction set that Claude Code loads on demand. Instead of 
 
 Two kinds:
 - **`/slash`** — you invoke it deliberately (15 of them)
-- **auto** — Claude may pull it in when the task matches (14 of them)
+- **auto** — Claude may pull it in when the task matches (13 of them)
 
 ## Why we have this
 
@@ -71,7 +71,7 @@ Lost at any point? Type `/which-skill` and it'll route you.
 
 ---
 
-# Productivity skills (9)
+# Productivity skills (8)
 
 ### Thinking things through
 | Skill | Summary |
@@ -91,12 +91,7 @@ Lost at any point? Type `/which-skill` and it'll route you.
 |---|---|
 | `/teach` | Teaches you a concept across sessions, tracking what you've learned. |
 | `/to-questionnaire` | Writes a questionnaire when the answer lives in someone else's head. |
-
-### Working style
-| Skill | Summary |
-|---|---|
 | `/i-have-adhd` | Answer-first, numbered, no filler output. Invoke at the start of a session. |
-| `/task-observer` | Watches a session and logs ideas for improving these skills. |
 
 ---
 

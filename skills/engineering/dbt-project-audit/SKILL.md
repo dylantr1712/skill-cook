@@ -1,6 +1,6 @@
 ---
 name: dbt-project-audit
-description: Scan a dbt project for structural, testing, and cost issues, present them as a visual HTML report, then grill through whichever fix you pick. Use when the user wants to review model structure, find untested/undocumented models, spot fan-out or grain drift, or improve project layering.
+description: Scan a dbt project for structure, testing, and cost issues, present them as a visual HTML report, then grill through whichever fix you pick.
 disable-model-invocation: true
 ---
 

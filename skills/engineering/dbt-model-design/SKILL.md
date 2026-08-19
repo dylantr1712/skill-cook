@@ -1,6 +1,6 @@
 ---
 name: dbt-model-design
-description: Shared vocabulary and principles for designing dbt models — grain, layering (staging/intermediate/marts), materialization, and DRY. Use when designing or refactoring a model, deciding where logic belongs, choosing a materialization, placing a seam between layers, or when another skill needs the dbt-modeling vocabulary.
+description: Vocabulary and principles for dbt model design — grain, layering (staging/intermediate/marts), materialization, DRY. Use when designing or refactoring a model, deciding where logic belongs, choosing a materialization, or when another skill needs the dbt vocabulary.
 ---
 
 # dbt Model Design

@@ -1,7 +1,7 @@
 # Skill Catalog
 
 Every skill in this repo — what it does, when to reach for it, and how to invoke it.
-29 skills: **20 engineering**, **9 productivity**.
+28 skills: **20 engineering**, **8 productivity**.
 
 ## How invocation works
 
@@ -10,7 +10,7 @@ Every skill in this repo — what it does, when to reach for it, and how to invo
 | **`/slash`** | User-invoked only (`disable-model-invocation: true`). Claude will *not* reach for it on its own — you type it. |
 | **auto** | Claude may pull it in automatically when the task matches its description. You can also invoke it by name. |
 
-15 skills are slash-only, 14 are auto. Nothing loads at session start on its own — if you want an always-on behaviour (like `/i-have-adhd`), invoke it yourself at the top of the session.
+15 skills are slash-only, 13 are auto. Nothing loads at session start on its own — if you want an always-on behaviour (like `/i-have-adhd`), invoke it yourself at the top of the session.
 
 **First run in a new repo:** `/setup-skills` once, to configure the issue tracker (GitHub / Jira / local markdown), triage labels, and doc layout the engineering skills expect.
 
@@ -104,7 +104,7 @@ Behavioural rules that reduce common LLM coding mistakes: state assumptions, kee
 
 ---
 
-# Productivity (9)
+# Productivity (8)
 
 ## Thinking & interrogation
 
@@ -135,14 +135,10 @@ Teaches you a concept or skill across multiple sessions, using the current direc
 ### `/to-questionnaire` — slash
 For when the blocker isn't in your head or the codebase but in **someone else's**. Interviews you about the *send* (who it's for, what you need back) and writes them a questionnaire aimed at the gap.
 
-## Working style & meta
+## Working style
 
 ### `/i-have-adhd` — slash
 Shapes output for an ADHD reader: lead with the next action, number multi-step work, restate state across turns, suppress tangents, give specific time estimates, make wins visible. Stays on until you say "stop adhd mode". **Invoke it at the top of a session** — it will not self-activate.
-
-### `/task-observer` — auto
-Watches a work session for skill-improvement opportunities and logs them to a persistent observation log for later review — patterns, corrections, friction, methodology worth keeping. Also known as "One Skill to Rule Them All".
-*Bundle: `references/weekly-review.md` (the review procedure), `references/skill-authoring.md` (taxonomy, confidentiality, authoring rules), `references/environments.md` (activation setup, no-filesystem mode).*
 
 ---
 
