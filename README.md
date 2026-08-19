@@ -74,4 +74,4 @@ skills/
 
 ## Licenses
 
-Matt Pocock, Ayoub Ghriss, and the andrej-karpathy-skills contributors — all MIT. Adaptations here preserve that. See each source repository for full license text.
+MIT. Derived from [mattpocock/skills](https://github.com/mattpocock/skills), [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills), and [i-have-adhd](https://github.com/ayghri/i-have-adhd) — see [LICENSE](LICENSE).
