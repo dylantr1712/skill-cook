@@ -1,17 +1,8 @@
 # Skill Cook
 
-A unified, personalized collection of Claude Code skills — drop the `skills/`
-folder into `.claude/` and go. Built from three sources, then adapted for an
-**analytics-engineering** workflow (**SQL · dbt · Snowflake**), with a
-**generic (un-branded) voice** and **GitHub + Jira + local** issue trackers.
-
-Sources:
-
-- **[Matt Pocock — mattpocock/skills](https://github.com/mattpocock/skills)** (MIT) — the engineering/productivity workflow skills, de-branded and re-stacked for SQL/dbt
-- **[Andrej Karpathy CLAUDE.md — multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)** (MIT) — behavioral guidelines, as both a skill and a root `CLAUDE.md`
-- **[i-have-adhd — ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)** (MIT) — ADHD-friendly output shaping
-
-Everything is flattened into one `skills/` folder (no name collisions).
+28 Claude Code skills for **analytics engineering** — SQL, dbt and Snowflake —
+wired to **GitHub, Jira, or local** issue tracking. Drop the `skills/` folder
+into `.claude/` and go.
 
 ## Install
 
@@ -33,21 +24,11 @@ Restart Claude Code (or start a new session) to pick them up. Invoke a skill by 
 
 > **`CLAUDE.md` vs `karpathy-guidelines`:** the same Karpathy rules exist in two forms. The root `CLAUDE.md` is **always-on** (costs tokens every turn); the `karpathy-guidelines` skill is **on-demand**. Use one or the other, not both.
 
-## How this differs from the originals
-
-- **De-branded.** `ask-matt` → `which-skill`, `setup-matt-pocock-skills` → `setup-skills`, and all first-person "Matt" voice/branding removed. Generic throughout.
-- **Re-stacked for analytics engineering.** The software-design trio was repurposed to dbt: `codebase-design` → **`dbt-model-design`** (grain/layering vocabulary), `tdd` → **`dbt-test`** (data-testing strategy), `improve-codebase-architecture` → **`dbt-project-audit`**. Examples use SQL/dbt/pytest-of-data rather than app code.
-- **Trackers: GitHub + Jira + local.** `/setup-skills` treats all three as first-class (added a Jira seed template using [`jira-cli`](https://github.com/ankitpokhrel/jira-cli)); GitLab dropped to an "other" option.
-- **Removed** skills with no analytics analog: `migrate-to-shoehorn` and `scaffold-exercises` (TS/course-specific), plus `setup-python-modules` and `setup-pre-commit` (Python package/app tooling).
-- **Removed the upstream `in-progress` skills** (`claude-handoff`, `loop-me`, `writing-beats`, `writing-fragments`, `writing-shape`) — unfinished by their author, and noise in a library meant to be shared with a team. Everything here is production-ready.
-- **Removed `task-observer`** — a meta-skill for auditing skills; useful to a skill librarian, confusing to someone still learning what a skill is.
-- **Optimized descriptions.** Only names + descriptions sit in context permanently (~1.1k tokens for all 28, about 0.5% of a 200k window); bodies load on invoke. Descriptions were trimmed 34% on a simple rule: **auto** skills keep their trigger phrases (removing them breaks matching), **slash-only** skills don't need any, since Claude can't select them.
-
 ## Skills
 
 > **📖 See [SKILLS.md](SKILLS.md)** for the full catalog — what each skill does, when to reach for it, invocation type, and how they chain together.
 
-Organized into two folders (like the upstream layout). Claude Code discovers `SKILL.md` files recursively, so the nesting is purely for navigation — invocation is always by the skill's own name (`/dbt-test`, etc.).
+Organized into two folders. Claude Code discovers `SKILL.md` files recursively, so the nesting is purely for navigation — invocation is always by the skill's own name (`/dbt-test`, etc.).
 
 ```
 skills/
