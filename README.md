@@ -1,13 +1,13 @@
 # Skill Cook
 
 A unified, personalized collection of Claude Code skills — drop the `skills/`
-folder into `.claude/` and go. Built from three sources, then adapted to a
-**SQL / Python** stack with a **generic (un-branded) voice** and
-**GitHub + Jira + local** issue trackers.
+folder into `.claude/` and go. Built from three sources, then adapted for an
+**analytics-engineering** workflow (**SQL · dbt · Snowflake**), with a
+**generic (un-branded) voice** and **GitHub + Jira + local** issue trackers.
 
 Sources:
 
-- **[Matt Pocock — mattpocock/skills](https://github.com/mattpocock/skills)** (MIT) — the engineering/productivity workflow skills, de-branded and re-stacked for Python/SQL
+- **[Matt Pocock — mattpocock/skills](https://github.com/mattpocock/skills)** (MIT) — the engineering/productivity workflow skills, de-branded and re-stacked for SQL/dbt
 - **[Andrej Karpathy CLAUDE.md — multica-ai/andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills)** (MIT) — behavioral guidelines, as both a skill and a root `CLAUDE.md`
 - **[i-have-adhd — ayghri/i-have-adhd](https://github.com/ayghri/i-have-adhd)** (MIT) — ADHD-friendly output shaping
 - **task-observer** — a meta-skill (added here) that watches work sessions for skill-improvement opportunities
@@ -37,9 +37,9 @@ Restart Claude Code (or start a new session) to pick them up. Invoke a skill by 
 ## How this differs from the originals
 
 - **De-branded.** `ask-matt` → `which-skill`, `setup-matt-pocock-skills` → `setup-skills`, and all first-person "Matt" voice/branding removed. Generic throughout.
-- **Re-stacked for Python / SQL.** Examples and tooling now use pytest, ruff, mypy, import-linter, sqlfluff (was Jest/Prettier/dependency-cruiser). `setup-ts-deep-modules` → **`setup-python-modules`** (import-linter). `setup-pre-commit` now sets up the Python `pre-commit` framework.
+- **Re-stacked for analytics engineering.** The software-design trio was repurposed to dbt: `codebase-design` → **`dbt-model-design`** (grain/layering vocabulary), `tdd` → **`dbt-test`** (data-testing strategy), `improve-codebase-architecture` → **`dbt-project-audit`**. Examples use SQL/dbt/pytest-of-data rather than app code.
 - **Trackers: GitHub + Jira + local.** `/setup-skills` treats all three as first-class (added a Jira seed template using [`jira-cli`](https://github.com/ankitpokhrel/jira-cli)); GitLab dropped to an "other" option.
-- **Removed** two irreducibly TypeScript/course-specific skills: `migrate-to-shoehorn` (Matt's `@total-typescript/shoehorn`) and `scaffold-exercises` (his `ai-hero-cli` course tooling).
+- **Removed** skills with no analytics analog: `migrate-to-shoehorn` and `scaffold-exercises` (TS/course-specific), plus `setup-python-modules` and `setup-pre-commit` (Python package/app tooling).
 
 ## Skills
 
@@ -49,23 +49,21 @@ Restart Claude Code (or start a new session) to pick them up. Invoke a skill by 
 | `which-skill` | Router — asks which skill or flow fits your situation. |
 | `setup-skills` | One-time repo config: issue tracker (GitHub/Jira/local), triage labels, doc layout. |
 | `code-review` | Reviews changes since a fixed point on Standards + Spec axes, in parallel sub-agents. |
-| `codebase-design` | Shared vocabulary for designing deep modules. |
-| `diagnosing-bugs` | Diagnosis loop for hard bugs and performance regressions. |
+| `dbt-model-design` | Vocabulary for designing dbt models: grain, layering (staging/intermediate/marts), materialization, DRY. |
+| `dbt-test` | dbt data-testing strategy: grain tests, generic/singular/unit tests, source freshness. |
+| `dbt-project-audit` | Scan a dbt project for structure/test/cost issues → visual HTML report → grill. |
+| `diagnosing-bugs` | Diagnosis loop for hard bugs and failing models/queries. |
 | `domain-modeling` | Build/sharpen a project's domain model (CONTEXT.md, ADRs). |
 | `grill-with-docs` | Relentless interview to sharpen a plan; produces ADRs + glossary. |
-| `implement` | Implement work from a spec or set of tickets (drives `tdd`, then `code-review`). |
-| `improve-codebase-architecture` | Scan for deepening opportunities → visual HTML report → grill. |
+| `implement` | Implement work from a spec or set of tickets (drives `dbt-test`, then `code-review`). |
 | `prototype` | Build a throwaway prototype to answer a design question. |
 | `research` | Investigate against primary sources, capture findings as Markdown. |
 | `resolving-merge-conflicts` | Resolve an in-progress git merge/rebase conflict. |
-| `tdd` | Test-driven development / red-green-refactor (pytest examples). |
 | `to-spec` | Turn the conversation into a spec, publish to the tracker. |
 | `to-tickets` | Break a plan/spec into tracer-bullet tickets with blocking edges. |
 | `triage` | Move issues/PRs through a triage state machine into agent-ready briefs. |
 | `wayfinder` | Plan huge work as a map of decision tickets, resolved one at a time. |
 | `wizard` | Generate an interactive bash wizard for human-only steps. |
-| `setup-pre-commit` | Set up Python/SQL pre-commit hooks (ruff, mypy, pytest, sqlfluff). |
-| `setup-python-modules` | Enforce deep Python modules (public `__init__`, private `_internal`) via import-linter. |
 
 ### Productivity
 | Skill | What it does |
