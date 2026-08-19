@@ -1,0 +1,5 @@
+interface:
+  display_name: "Setup Python Deep Modules"
+  short_description: "Enforce deep Python modules"
+policy:
+  allow_implicit_invocation: false

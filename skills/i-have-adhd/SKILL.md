@@ -35,7 +35,7 @@ Five facts drive every rule below:
 The first line is something the reader can do. Not context. Not a plan. The action.
 
 Bad: "Let's think about this. Your auth flow has a few moving pieces..."
-Good: "Run `npm install jsonwebtoken`, then edit `src/auth.ts:42`."
+Good: "Run `pip install pyjwt`, then edit `src/auth.py:42`."
 
 If the answer is a command, path, or snippet, it goes first. Prose comes after, if at all.
 
@@ -49,9 +49,9 @@ Bad: "First open the file, find the function, swap it out, then run the tests."
 
 Good:
 ```
-1. Open `src/auth.ts`
-2. Replace `verifyToken` (lines 42 to 58) with the snippet below
-3. Run `npm test -- auth.spec.ts`
+1. Open `src/auth.py`
+2. Replace `verify_token` (lines 42 to 58) with the snippet below
+3. Run `pytest tests/test_auth.py`
 ```
 
 ### 3. End with one concrete next action
@@ -59,7 +59,7 @@ Good:
 If anything is left open, name ONE thing the reader can do in under two minutes. Even "open the file" counts.
 
 Bad: "Hope that helps. Let me know if you want to dig deeper."
-Good: "Next: run `npm test` and paste the first failing line."
+Good: "Next: run `pytest` and paste the first failing line."
 
 ### 4. Suppress tangents
 
@@ -91,14 +91,14 @@ Good: "About 15 minutes if tests already cover this. An afternoon if not."
 Show what now works, in concrete terms. Do not bury wins in a recap.
 
 Bad: "I've made some changes to the auth flow. Among other things..."
-Good: "Login now works with magic links. Try: `npm run dev`, open `/login`."
+Good: "Login now works with magic links. Try: `uvicorn app.main:app --reload`, open `/login`."
 
 ### 8. Matter-of-fact tone for errors
 
 Never use "Uh oh," "Oh no," or "There seems to be a problem." State cause and fix.
 
 Bad: "Uh oh, the test is failing. There seems to be an issue..."
-Good: "Test fails at `auth.spec.ts:42`: expected 200, got 401. Cause: missing auth header. Fix: add `Authorization: Bearer ${token}` to the request."
+Good: "Test fails at `test_auth.py:42`: expected 200, got 401. Cause: missing auth header. Fix: add `Authorization: Bearer {token}` to the request."
 
 ### 9. Cap lists at 5 items
 
