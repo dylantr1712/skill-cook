@@ -43,7 +43,15 @@ Restart Claude Code (or start a new session) to pick them up. Invoke a skill by 
 
 ## Skills
 
-### Engineering
+Organized into two folders (like the upstream layout). Claude Code discovers `SKILL.md` files recursively, so the nesting is purely for navigation — invocation is always by the skill's own name (`/dbt-test`, etc.).
+
+```
+skills/
+├── engineering/     # build, review, data modeling, git, coding guidelines
+└── productivity/    # thinking, writing, comms, working style, meta
+```
+
+### `skills/engineering/` (20)
 | Skill | What it does |
 |---|---|
 | `which-skill` | Router — asks which skill or flow fits your situation. |
@@ -64,42 +72,26 @@ Restart Claude Code (or start a new session) to pick them up. Invoke a skill by 
 | `triage` | Move issues/PRs through a triage state machine into agent-ready briefs. |
 | `wayfinder` | Plan huge work as a map of decision tickets, resolved one at a time. |
 | `wizard` | Generate an interactive bash wizard for human-only steps. |
+| `git-guardrails-claude-code` | Hooks to block dangerous git commands before they run. |
+| `karpathy-guidelines` | Reduce common LLM coding mistakes (on-demand form of `CLAUDE.md`). |
 
-### Productivity
+### `skills/productivity/` (14)
 | Skill | What it does |
 |---|---|
 | `grill-me` | Relentless interview to sharpen a plan or design. |
 | `grilling` | Stress-test your thinking about a plan, decision, or idea. |
 | `handoff` | Compact the conversation into a handoff doc for another agent. |
+| `claude-handoff` | Hand the conversation to a fresh background agent. *(experimental)* |
 | `teach` | Teach you a new skill or concept in this workspace. |
 | `to-questionnaire` | Turn a decision you can't answer into a questionnaire for someone else. |
 | `wait-what` | "That last message didn't land" — re-pitch it. |
 | `writing-for-agents` | Writing docs for agents (skills, AGENTS.md, CLAUDE.md). |
-
-### Experimental (upstream `in-progress` — treat as WIP)
-| Skill | What it does |
-|---|---|
-| `claude-handoff` | Hand the conversation to a fresh background agent. |
-| `loop-me` | Grill you about specs for workflows you want to build. |
-| `writing-beats` | Assemble raw material into a journey of beats. |
-| `writing-fragments` | Mine raw writing fragments, no structure yet. |
-| `writing-shape` | Shape raw material into an article, paragraph by paragraph. |
-
-### Misc
-| Skill | What it does |
-|---|---|
-| `git-guardrails-claude-code` | Hooks to block dangerous git commands before they run. |
-
-### Meta
-| Skill | What it does |
-|---|---|
-| `task-observer` | Watches work sessions and logs skill-improvement opportunities for later review. Bundle: `SKILL.md` + `references/{weekly-review,skill-authoring,environments}.md`. |
-
-### Guidelines & output style
-| Skill | What it does |
-|---|---|
-| `karpathy-guidelines` | Reduce common LLM coding mistakes (on-demand form of `CLAUDE.md`). |
+| `writing-beats` | Assemble raw material into a journey of beats. *(experimental)* |
+| `writing-fragments` | Mine raw writing fragments, no structure yet. *(experimental)* |
+| `writing-shape` | Shape raw material into an article, paragraph by paragraph. *(experimental)* |
+| `loop-me` | Grill you about specs for workflows you want to build. *(experimental)* |
 | `i-have-adhd` | Lead with the next action, number steps, restate state, make wins visible. `/i-have-adhd` … "stop adhd mode". |
+| `task-observer` | Watches work sessions and logs skill-improvement opportunities. Bundle: `SKILL.md` + `references/{weekly-review,skill-authoring,environments}.md`. |
 
 ## Licenses
 
