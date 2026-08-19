@@ -1,5 +1,8 @@
 # Good and Bad dbt Tests
 
+> **YAML key:** these examples use `data_tests:` (dbt 1.8+). On dbt 1.7 and
+> earlier the key is `tests:` — same behaviour, older name.
+
 ## Good tests
 
 **Grain test** — the first test every model gets, declared in YAML:
