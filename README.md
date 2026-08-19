@@ -43,6 +43,8 @@ Restart Claude Code (or start a new session) to pick them up. Invoke a skill by 
 
 ## Skills
 
+> **📖 See [SKILLS.md](SKILLS.md)** for the full catalog — what each skill does, when to reach for it, invocation type, and how they chain together.
+
 Organized into two folders (like the upstream layout). Claude Code discovers `SKILL.md` files recursively, so the nesting is purely for navigation — invocation is always by the skill's own name (`/dbt-test`, etc.).
 
 ```
