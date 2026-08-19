@@ -1,13 +1,13 @@
 # Claude Code Skills — Team Guide
 
-A shared library of **34 reusable workflows** for Claude Code, tuned for our analytics-engineering stack (SQL · dbt · Snowflake) and our tooling (GitHub, Jira).
+A shared library of **29 reusable workflows** for Claude Code, tuned for our analytics-engineering stack (SQL · dbt · Snowflake) and our tooling (GitHub, Jira).
 
 ## What is a "skill"?
 
 A skill is a saved instruction set that Claude Code loads on demand. Instead of re-explaining how we test a dbt model or how we write a ticket, you type `/dbt-test` and Claude follows the agreed process. Think of them as **team conventions Claude can actually execute** — not snippets, but workflows.
 
 Two kinds:
-- **`/slash`** — you invoke it deliberately (20 of them)
+- **`/slash`** — you invoke it deliberately (15 of them)
 - **auto** — Claude may pull it in when the task matches (14 of them)
 
 ## Why we have this
@@ -71,29 +71,20 @@ Lost at any point? Type `/which-skill` and it'll route you.
 
 ---
 
-# Productivity skills (14)
+# Productivity skills (9)
 
 ### Thinking things through
 | Skill | Summary |
 |---|---|
 | `/grilling` | The interview engine other skills use — stress-tests your reasoning. |
 | `/grill-me` | Same interview, but saves nothing. For plans and decisions outside a repo. |
-| `/loop-me` | Interviews you about workflows you want to build. *(experimental)* |
 
-### Managing sessions
+### Sessions &amp; docs
 | Skill | Summary |
 |---|---|
 | `/handoff` | Writes a handoff doc so another session (or person) can pick up your work. |
-| `/claude-handoff` | Hands off to a fresh background agent immediately. *(experimental)* |
 | `/wait-what` | "That didn't make sense" — makes Claude re-explain in plain English. |
-
-### Writing
-| Skill | Summary |
-|---|---|
 | `/writing-for-agents` | How to write docs that agents read well (CLAUDE.md, skills, runbooks). |
-| `/writing-fragments` | Mine raw ideas on a topic, no structure yet. *(experimental)* |
-| `/writing-shape` | Shape rough material into an article. *(experimental)* |
-| `/writing-beats` | Build a piece as a sequence of beats. *(experimental)* |
 
 ### Learning & comms
 | Skill | Summary |

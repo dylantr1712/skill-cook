@@ -1,7 +1,7 @@
 # Skill Catalog
 
 Every skill in this repo — what it does, when to reach for it, and how to invoke it.
-34 skills: **20 engineering**, **14 productivity**.
+29 skills: **20 engineering**, **9 productivity**.
 
 ## How invocation works
 
@@ -10,7 +10,7 @@ Every skill in this repo — what it does, when to reach for it, and how to invo
 | **`/slash`** | User-invoked only (`disable-model-invocation: true`). Claude will *not* reach for it on its own — you type it. |
 | **auto** | Claude may pull it in automatically when the task matches its description. You can also invoke it by name. |
 
-20 skills are slash-only, 14 are auto. Nothing loads at session start on its own — if you want an always-on behaviour (like `/i-have-adhd`), invoke it yourself at the top of the session.
+15 skills are slash-only, 14 are auto. Nothing loads at session start on its own — if you want an always-on behaviour (like `/i-have-adhd`), invoke it yourself at the top of the session.
 
 **First run in a new repo:** `/setup-skills` once, to configure the issue tracker (GitHub / Jira / local markdown), triage labels, and doc layout the engineering skills expect.
 
@@ -104,7 +104,7 @@ Behavioural rules that reduce common LLM coding mistakes: state assumptions, kee
 
 ---
 
-# Productivity (14)
+# Productivity (9)
 
 ## Thinking & interrogation
 
@@ -114,34 +114,17 @@ The interview **primitive**: rounds of questions, a moving frontier, facts are t
 ### `/grill-me` — slash
 The same relentless interview as `/grill-with-docs`, but **stateless** — saves nothing, writes no `CONTEXT.md`. Use it when there's no repo underneath: a plan, a career decision, a piece of writing.
 
-### `/loop-me` — slash *(experimental)*
-Grills you about the specs for workflows you want to build, in this workspace.
-
-## Session & context management
+## Sessions, context & docs
 
 ### `/handoff` — slash
 Compacts the current conversation into a portable markdown handoff document another agent can pick up. Narrow by design — for a new harness, a new directory, a colleague, or forking a side task mid-phase.
 
-### `/claude-handoff` — slash *(experimental)*
-Hands the conversation to a fresh background agent that picks up immediately, rather than writing a file for later.
-
 ### `/wait-what` — slash
 The corrective for a message that didn't land. Say it mid-conversation, inside any other skill, and the agent re-pitches what it just said in plain English with the context you were missing.
-
-## Writing
 
 ### `/writing-for-agents` — auto
 The reference for writing documents **agents** consume: skills, `AGENTS.md`, `CLAUDE.md`, pointed-at docs. Covers cognitive load, what belongs in a doc vs. discoverable from the environment.
 *Bundle: `SKILL-MECHANICS.md` — frontmatter, invocation choice, router skills.*
-
-### `/writing-fragments` — slash *(experimental)*
-**Explore** phase: mine raw fragments on a topic, no structure yet.
-
-### `/writing-shape` — slash *(experimental)*
-**Exploit** phase: shape a pile of raw material into an article, paragraph by paragraph.
-
-### `/writing-beats` — slash *(experimental)*
-**Exploit** phase: assemble raw material into a journey of beats, grounding each term before a beat leans on it.
 
 ## Learning & comms
 

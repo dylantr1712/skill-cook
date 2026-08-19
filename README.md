@@ -40,6 +40,7 @@ Restart Claude Code (or start a new session) to pick them up. Invoke a skill by 
 - **Re-stacked for analytics engineering.** The software-design trio was repurposed to dbt: `codebase-design` → **`dbt-model-design`** (grain/layering vocabulary), `tdd` → **`dbt-test`** (data-testing strategy), `improve-codebase-architecture` → **`dbt-project-audit`**. Examples use SQL/dbt/pytest-of-data rather than app code.
 - **Trackers: GitHub + Jira + local.** `/setup-skills` treats all three as first-class (added a Jira seed template using [`jira-cli`](https://github.com/ankitpokhrel/jira-cli)); GitLab dropped to an "other" option.
 - **Removed** skills with no analytics analog: `migrate-to-shoehorn` and `scaffold-exercises` (TS/course-specific), plus `setup-python-modules` and `setup-pre-commit` (Python package/app tooling).
+- **Removed the upstream `in-progress` skills** (`claude-handoff`, `loop-me`, `writing-beats`, `writing-fragments`, `writing-shape`) — unfinished by their author, and noise in a library meant to be shared with a team. Everything here is production-ready.
 
 ## Skills
 
@@ -77,21 +78,16 @@ skills/
 | `git-guardrails-claude-code` | Hooks to block dangerous git commands before they run. |
 | `karpathy-guidelines` | Reduce common LLM coding mistakes (on-demand form of `CLAUDE.md`). |
 
-### `skills/productivity/` (14)
+### `skills/productivity/` (9)
 | Skill | What it does |
 |---|---|
 | `grill-me` | Relentless interview to sharpen a plan or design. |
 | `grilling` | Stress-test your thinking about a plan, decision, or idea. |
 | `handoff` | Compact the conversation into a handoff doc for another agent. |
-| `claude-handoff` | Hand the conversation to a fresh background agent. *(experimental)* |
 | `teach` | Teach you a new skill or concept in this workspace. |
 | `to-questionnaire` | Turn a decision you can't answer into a questionnaire for someone else. |
 | `wait-what` | "That last message didn't land" — re-pitch it. |
 | `writing-for-agents` | Writing docs for agents (skills, AGENTS.md, CLAUDE.md). |
-| `writing-beats` | Assemble raw material into a journey of beats. *(experimental)* |
-| `writing-fragments` | Mine raw writing fragments, no structure yet. *(experimental)* |
-| `writing-shape` | Shape raw material into an article, paragraph by paragraph. *(experimental)* |
-| `loop-me` | Grill you about specs for workflows you want to build. *(experimental)* |
 | `i-have-adhd` | Lead with the next action, number steps, restate state, make wins visible. `/i-have-adhd` … "stop adhd mode". |
 | `task-observer` | Watches work sessions and logs skill-improvement opportunities. Bundle: `SKILL.md` + `references/{weekly-review,skill-authoring,environments}.md`. |
 
