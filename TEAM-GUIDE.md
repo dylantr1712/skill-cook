@@ -18,10 +18,23 @@ Most Claude Code skill libraries are written for app developers — TypeScript, 
 
 ```bash
 git clone <this-repo> && cd "Skill Cook"
-cp -r skills/* ~/.claude/skills/
+./install.sh                    # macOS / Linux / Git Bash
+```
+```powershell
+.\install.ps1                   # Windows PowerShell
 ```
 
-Restart Claude Code. Then in any repo, run `/setup-skills` **once** — it configures which issue tracker that repo uses (GitHub, Jira, or local files) and where docs live.
+Start a new Claude Code session, then type `/grill-me`. If it autocompletes, you are set.
+
+**You do not have to take all 28.** Name the ones you want and leave the rest:
+
+```bash
+./install.sh grill-me wait-what dbt-test
+```
+
+Run `./install.sh --list` to see every name, and re-run the installer any time to add more.
+
+Once you start using the spec-and-ticket skills (`/to-spec`, `/to-tickets`, `/triage`), run `/setup-skills` **once per repo** first. It records which issue tracker that repo uses (GitHub, Jira, or local files) and where docs live. The skills below that do not touch the tracker need no setup at all.
 
 Lost at any point? Type `/which-skill` and it'll route you.
 

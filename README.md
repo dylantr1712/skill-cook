@@ -8,17 +8,27 @@ into `.claude/` and go.
 
 **Personal (all your projects):**
 ```bash
-cp -r skills/* ~/.claude/skills/
-cp CLAUDE.md ~/.claude/CLAUDE.md   # optional: Karpathy's rules, always-on
+./install.sh
+```
+```powershell
+.\install.ps1
 ```
 
 **One project only:**
 ```bash
-cp -r skills/* /path/to/project/.claude/skills/
-cp CLAUDE.md   /path/to/project/.claude/CLAUDE.md   # optional
+./install.sh --project /path/to/project
 ```
 
-Restart Claude Code (or start a new session) to pick them up. Invoke a skill by name, e.g. `/i-have-adhd`, `/grill-me`, `/code-review`.
+**Just a few, to start:**
+```bash
+./install.sh grill-me wait-what dbt-test
+```
+
+Run `./install.sh --list` to see every name. Add the always-on Karpathy rules separately if you want them: `cp CLAUDE.md ~/.claude/CLAUDE.md` (see the note below).
+
+Start a new Claude Code session, then type `/grill-me`. If it autocompletes, the install worked.
+
+> **Heads-up:** installing `code-review` shadows Claude Code's built-in `/code-review`. Delete `~/.claude/skills/code-review` to get the built-in back, or leave it out of the install.
 
 > **First run:** `/setup-skills` configures the issue tracker (GitHub, Jira, or local markdown), triage labels, and doc layout the engineering skills expect. Run it once per repo.
 
@@ -28,7 +38,7 @@ Restart Claude Code (or start a new session) to pick them up. Invoke a skill by 
 
 > **📖 See [SKILLS.md](SKILLS.md)** for the full catalog — what each skill does, when to reach for it, invocation type, and how they chain together.
 
-Organized into two folders. Claude Code discovers `SKILL.md` files recursively, so the nesting is purely for navigation — invocation is always by the skill's own name (`/dbt-test`, etc.).
+Organized into two folders for navigation. **Claude Code does not discover skills recursively:** it looks for `<skills-dir>/<skill-name>/SKILL.md`, exactly one level deep. That is why the install script flattens these buckets rather than copying them across as-is. Once installed, invocation is always by the skill's own name (`/dbt-test`, etc.), and the bucket is invisible.
 
 ```
 skills/
