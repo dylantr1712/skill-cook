@@ -49,6 +49,8 @@ If any answer Claude gives you does not land, type `/wait-what` and it will re-p
 
 Two more install alongside these but are not typed directly: `grilling` (the interview engine) and `domain-modeling` (keeps the glossary honest). The four above call them.
 
+Once these feel natural, [SKILLS.md](SKILLS.md#flows) has worked examples of chaining them: a vague dashboard ticket, a reconciliation mismatch, inheriting an undocumented model, and a migration too big to see the end of.
+
 ### Why the glossary matters
 
 `/grill-with-docs` writes a `CONTEXT.md`: a short glossary of the terms a project actually uses. It sounds like busywork, and it is the highest-leverage thing here.

@@ -44,7 +44,7 @@ The last two carry no slash of their own; the first four call them.
 
 Everything else lives in `extras/`, grouped for browsing. It is held back rather than removed: the spec-and-ticket flow, dbt skills, debugging discipline, and the writing tools are all there and all one command away.
 
-See **[SKILLS.md](SKILLS.md)** for the full catalog, and **[TEAM-GUIDE.md](TEAM-GUIDE.md)** if you are new to skills.
+See **[SKILLS.md](SKILLS.md)** for the full catalog and [worked flows](SKILLS.md#flows), and **[TEAM-GUIDE.md](TEAM-GUIDE.md)** if you are new to skills.
 
 A few worth knowing about before you install them:
 

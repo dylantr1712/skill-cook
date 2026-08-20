@@ -25,6 +25,172 @@ Nothing turns itself on at session start. For an always-on behaviour like `/i-ha
 
 ---
 
+# Flows
+
+A skill on its own is useful. The value compounds when you chain them, because each one hands the next a better starting point: an interview produces a spec, a spec produces tickets, a ticket produces a reviewed change.
+
+## Two ways skills connect
+
+**Calls** happen automatically. `/grill-me` is one line: "call the Skill tool with grilling". You type one name and the engine underneath does the work. Nothing for you to do.
+
+**Sequences** are yours to drive. Nothing chains `/to-spec` into `/to-tickets`; you run one, look at what came out, then run the next.
+
+The call graph is small, and two skills sit under almost everything:
+
+```mermaid
+flowchart LR
+  GM["/grill-me"]
+  GWD["/grill-with-docs"]
+  TR["/triage"]
+  WF["/wayfinder"]
+  DPA["/dbt-project-audit"]
+  DT["dbt-test"]
+
+  G(["grilling"])
+  DM(["domain-modeling"])
+  PR(["prototype"])
+  RS(["research"])
+  DMD(["dbt-model-design"])
+
+  GM --> G
+  GWD --> G
+  GWD --> DM
+  TR --> G
+  TR --> DM
+  WF --> G
+  WF --> DM
+  WF --> PR
+  WF --> RS
+  DPA --> G
+  DPA --> DM
+  DPA --> DMD
+  DT --> DMD
+```
+
+`grilling` and `domain-modeling` are the engines: an interview discipline, and a glossary discipline. Five different skills are wrappers that point them at a different problem. That is why both ship in the starter set even though you never type either.
+
+## The main flow: request to shipped
+
+```
+/grill-with-docs  ->  /to-spec  ->  /to-tickets  ->  /implement  ->  code-review
+   align on what          write it       split it        build one       check it
+   is actually wanted     down           into slices     slice
+```
+
+Keep the first three in **one unbroken context window**, so the spec is written by a session that heard the whole interview rather than a summary of it. Then `/clear` between each `/implement`, because each ticket is self-contained and the last one's context is dead weight.
+
+Everything after `/grill-with-docs` needs `/setup-skills` run once in that repo first.
+
+## Pick a flow by situation
+
+| The situation | The flow | Installed by default? |
+| --- | --- | --- |
+| A vague request landed and you are not sure what is actually wanted | `/grill-with-docs` | yes |
+| Same, but there is no repo (a plan, a proposal, a decision) | `/grill-me` | yes |
+| You now know what to build, and it is more than a session's work | `/grill-with-docs` -> `/to-spec` -> `/to-tickets` -> `/implement` | needs extras |
+| You know what to build and it is small | `/grill-with-docs` -> build it | yes |
+| Numbers are wrong and you do not know why | `diagnosing-bugs` | needs extras |
+| You inherited something undocumented | `/grill-with-docs` (it challenges you against the code) | yes |
+| An effort so big you cannot see the route yet | `/wayfinder` -> then rejoin at `/to-spec` | needs extras |
+| The answer lives in someone else's head | `/to-questionnaire` | needs extras |
+| Raw bug reports and requests are piling up | `/triage` -> then `/implement` | needs extras |
+| Claude said something and you did not follow it | `/wait-what` | yes |
+| Session is long, or you are stopping for the day | `/handoff` | yes |
+
+## Worked examples
+
+### 1. A dashboard request with three hidden decisions
+
+> **INS-482** *Add average wait time by service to the weekly ops dashboard.*
+
+One sentence, and at least three unsettled decisions inside it. **Average** could be mean or median, and for wait times those differ a lot. **Wait time** could be measured from queue entry to answer, or to resolution, and abandoned calls either count or they do not. **By service** is a grain question hiding as a grouping. **Weekly** could be calendar weeks or rolling seven days.
+
+Guess wrong on any one and you build the wrong number, correctly.
+
+```
+/grill-with-docs
+```
+
+It works the open decisions in rounds, giving you numbered questions with its recommended answer for each, so agreeing is one word and disagreeing is one sentence. As each lands it writes the term into `CONTEXT.md`, which means the next person to touch wait times inherits the definition instead of re-deriving it.
+
+Then, if it is more than a session's work:
+
+```
+/to-spec        # the conversation becomes a written spec on Jira
+/to-tickets     # split into slices, each declaring what blocks it
+/implement      # one slice, fresh context each time
+```
+
+**Starter-set version:** run `/grill-with-docs` and stop there, then build it yourself. You still get the alignment and the glossary, which is where most of the value is.
+
+### 2. The numbers do not match
+
+> *"Weekly report shows about 12% fewer calls than the source system for last month. Can you take a look?"*
+
+The instinct is to open the model and start reading SQL. That is the failure this skill exists to prevent.
+
+```
+diagnosing-bugs
+```
+
+It will not theorise until there is a **tight loop**: one command that already goes red on this specific discrepancy. For data work that is rarely a full build. It is a scoped query, pinned to one day where the gap reproduces, run against dev, returning the difference as a number you can watch change. A forty-minute rebuild is not a loop; a four-second query is.
+
+Then it minimises (which day, which service, which channel still shows the gap), then it makes you rank three to five falsifiable hypotheses before testing any. For a count discrepancy those usually include: late-arriving rows the incremental never picked up, a timezone boundary putting rows in the wrong day, a join fanning out and then being deduped, or a filter on a column that is null more often than anyone expected.
+
+Ranking before testing matters because the first plausible idea anchors you, and in reconciliation work the first plausible idea is usually the timezone.
+
+### 3. You inherited a model nobody documented
+
+> *`fct_service_episodes`, 400 lines, no description, and the person who wrote it has left.*
+
+Read it, form a view, then get challenged on it:
+
+```
+/grill-with-docs
+```
+
+Say what you think the model does. `domain-modeling` cross-references your account against the SQL and pushes back where they disagree: *"you said an episode closes when the referral is actioned, but the model also closes it on a 30 day timeout. Which is right?"*
+
+That contradiction is the thing you needed to find, and reading the file alone would not have surfaced it. Every term you settle goes into `CONTEXT.md`, so the next person inherits your afternoon of work instead of repeating it.
+
+When an explanation comes back as jargon soup:
+
+```
+/wait-what
+```
+
+### 4. A migration you cannot see the end of
+
+> *Move the Athena and Qlik reporting layer onto Snowflake and dbt.*
+
+Months of work, and the route is not visible yet. `/to-spec` would produce fiction, because you cannot spec what you have not decided.
+
+```
+/wayfinder
+```
+
+It charts a **map** on the tracker: not tasks, but the open *decisions*, each as its own ticket with its blockers declared. Which models move first. Whether history is backfilled or cut over. What happens to the Qlik extracts during the overlap. You resolve them one per session, and each answer clears the fog enough to see the next few.
+
+It produces **decisions, not deliverables**. When the route is clear, rejoin the main flow at `/to-spec`.
+
+Needs `/setup-skills` first, and it is the most demanding thing in this repo. Do not reach for it on a well-scoped feature.
+
+### 5. The answer is not yours to give
+
+> *Does "active client" mean the same thing in our marts as it does in Finance's reporting?*
+
+You cannot answer it and neither can Claude.
+
+```
+/to-questionnaire
+```
+
+It interviews you about the **send** rather than the subject, which is the part you can always answer: who is receiving this, what do they know that you do not, what do you need to walk away able to decide. Then it writes a Markdown questionnaire aimed at that gap, which you send or work through in a meeting.
+
+What comes back is material for `/grill-with-docs`.
+
+---
+
 # The starter set (6)
 
 Installed by default. No setup, no repo writes unless you ask.
