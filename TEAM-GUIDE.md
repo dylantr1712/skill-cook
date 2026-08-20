@@ -59,7 +59,7 @@ Without it, you spend a sentence every session explaining what a term means. Wit
 
 ## When you want more
 
-Another 22 skills ship in `extras/`, held back so this page stays readable. They cover the spec-and-ticket workflow, dbt model design and testing, a debugging discipline, and more.
+Another 19 skills ship in `extras/`, held back so this page stays readable. They cover the spec-and-ticket workflow, triage and planning, a debugging discipline, and more.
 
 ```bash
 ./install.sh --list             # see every name

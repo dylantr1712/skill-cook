@@ -2,12 +2,12 @@
 
 Every skill in this repo: what it does, when to reach for it, and how to invoke it.
 
-28 skills. **Six install by default** (`skills/`), the other **22 are held back** in `extras/` so the starting point stays small. Everything here installs by name:
+25 skills. **Six install by default** (`skills/`), the other **19 are held back** in `extras/` so the starting point stays small. Everything here installs by name:
 
 ```bash
 ./install.sh --list          # every name
 ./install.sh <name> ...      # add any of them, from either group
-./install.sh --all           # all 28
+./install.sh --all           # all 25
 ```
 
 New to skills? Read [TEAM-GUIDE.md](TEAM-GUIDE.md) instead. This page is the reference.
@@ -19,7 +19,7 @@ New to skills? Read [TEAM-GUIDE.md](TEAM-GUIDE.md) instead. This page is the ref
 | **`/slash`** | User-invoked only (`disable-model-invocation: true`). Claude will *not* reach for it on its own. You type it. |
 | **auto** | Claude may pull it in automatically when the task matches its description. You can also invoke it by name. |
 
-15 skills are slash-only, 13 are auto. An auto skill costs a little context on every turn, because its description stays loaded so Claude knows it exists; a slash-only skill costs nothing until you type it. That is the main reason not to install all 28 by reflex.
+14 skills are slash-only, 11 are auto. An auto skill costs a little context on every turn, because its description stays loaded so Claude knows it exists; a slash-only skill costs nothing until you type it. That is the main reason not to install all 25 by reflex.
 
 Nothing turns itself on at session start. For an always-on behaviour like `/i-have-adhd`, invoke it yourself at the top of the session.
 
@@ -43,14 +43,11 @@ flowchart LR
   GWD["/grill-with-docs"]
   TR["/triage"]
   WF["/wayfinder"]
-  DPA["/dbt-project-audit"]
-  DT["dbt-test"]
 
   G(["grilling"])
   DM(["domain-modeling"])
   PR(["prototype"])
   RS(["research"])
-  DMD(["dbt-model-design"])
 
   GM --> G
   GWD --> G
@@ -61,13 +58,9 @@ flowchart LR
   WF --> DM
   WF --> PR
   WF --> RS
-  DPA --> G
-  DPA --> DM
-  DPA --> DMD
-  DT --> DMD
 ```
 
-`grilling` and `domain-modeling` are the engines: an interview discipline, and a glossary discipline. Five different skills are wrappers that point them at a different problem. That is why both ship in the starter set even though you never type either.
+`grilling` and `domain-modeling` are the engines: an interview discipline, and a glossary discipline. Several skills are wrappers that point them at a different problem. That is why both ship in the starter set even though you never type either.
 
 ## The main flow: request to shipped
 
@@ -216,7 +209,7 @@ The active discipline behind the glossary: challenge a fuzzy term, resolve an ov
 
 ---
 
-# Extras (22)
+# Extras (19)
 
 Held back, not removed. Install any by name.
 
@@ -246,19 +239,6 @@ Builds the work described by a spec or ticket, testing at pre-agreed seams and c
 ### `code-review` — auto
 Reviews the diff since a fixed point on two axes at once: **Standards** (does it follow this repo's conventions, plus a code-smell baseline) and **Spec** (does it do what the ticket asked). Runs both as parallel sub-agents so neither colours the other.
 **Note:** installing this overrides Claude Code's built-in `/code-review`.
-
-## dbt and data modelling
-
-### `dbt-model-design` — auto
-The vocabulary for model design: grain, layering across staging, intermediate and marts, materialization, and where DRY helps versus hurts. Reach for it when designing or refactoring a model.
-
-### `dbt-test` — auto
-What to test and how. The grain test comes first, every model, every time; then referential integrity, business rules, and source freshness. Covers generic, package, singular and unit tests, and the anti-patterns worth knowing.
-*Bundle: `tests.md`, `unit-tests.md`.*
-
-### `/dbt-project-audit` — slash
-Scans a whole project for untested grains, layering violations and cost smells, presents them as a visual HTML report, then grills you through whichever fix you pick.
-*Bundle: `HTML-REPORT.md`.*
 
 ## When something comes up
 

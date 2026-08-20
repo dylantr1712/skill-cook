@@ -1,5 +1,0 @@
-interface:
-  display_name: "dbt Project Audit"
-  short_description: "Find and grill dbt structure/test/cost fixes"
-policy:
-  allow_implicit_invocation: false

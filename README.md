@@ -2,7 +2,7 @@
 
 Claude Code skills for analytics engineering, wired to GitHub, Jira, or local issue tracking.
 
-**Six skills install by default.** That is deliberate: a skill library you can hold in your head gets used, and one with thirty entries gets ignored. Another 22 sit in `extras/` and install by name whenever you want them.
+**Six skills install by default.** That is deliberate: a skill library you can hold in your head gets used, and one with thirty entries gets ignored. Another 19 sit in `extras/` and install by name whenever you want them.
 
 ## Install
 
@@ -21,7 +21,7 @@ Start a new Claude Code session, then type `/grill-me`. If it autocompletes, it 
 | One project only | `./install.sh --project /path/to/repo` |
 | Something from extras | `./install.sh wayfinder to-spec` |
 | See every name | `./install.sh --list` |
-| All 28 | `./install.sh --all` |
+| All 25 | `./install.sh --all` |
 
 Re-run it any time to add more. PowerShell takes the same arguments (`-Project`, `-List`, `-All`).
 
@@ -42,7 +42,7 @@ The last two carry no slash of their own; the first four call them.
 
 ## Extras
 
-Everything else lives in `extras/`, grouped for browsing. It is held back rather than removed: the spec-and-ticket flow, dbt skills, debugging discipline, and the writing tools are all there and all one command away.
+Everything else lives in `extras/`, grouped for browsing. It is held back rather than removed: the spec-and-ticket flow, the triage and planning skills, debugging discipline, and the writing tools are all there and all one command away.
 
 See **[SKILLS.md](SKILLS.md)** for the full catalog and [worked flows](SKILLS.md#flows), and **[TEAM-GUIDE.md](TEAM-GUIDE.md)** if you are new to skills.
 

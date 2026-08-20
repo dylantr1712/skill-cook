@@ -116,7 +116,7 @@ Computable from field names alone. It is also what a human reviewer's eye slides
 
 **Open questions should feed `grilling`, not sit in a list.** A document full of open questions is a document nobody resolves. The extractor should hand them to the interview: `/grill-with-docs` works them in rounds with a recommended answer each, and resolutions land in `CONTEXT.md` and ADRs as they settle. Phase 2 grain decisions are exactly the "hard to reverse, surprising without context, real trade-off" test `domain-modeling` uses to decide something deserves an ADR.
 
-**Speak `dbt-model-design`'s vocabulary.** It already defines grain, layer, contract, source, exposure. Emit those words meaning those things and the output scaffolds dbt models directly. Invent new words and someone translates twice.
+**Fix the target vocabulary before writing any output.** Grain, layer, contract, source and exposure need to mean one thing each, and the extractor should emit exactly those words. This repo no longer ships a dbt modelling skill to borrow the definitions from, so they will have to come from the project's own `CONTEXT.md`, agreed via `/grill-with-docs` before extraction starts. Invent new words and someone translates twice.
 
 ### Start narrower than ten output categories
 
