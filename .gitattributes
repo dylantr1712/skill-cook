@@ -1,0 +1,6 @@
+# Keep everything LF in the repo. install.sh must have LF endings or bash
+# fails on the carriage return when a teammate runs it on macOS or Linux.
+* text=auto eol=lf
+*.sh text eol=lf
+*.ps1 text eol=crlf
+*.png binary
