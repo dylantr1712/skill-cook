@@ -1,6 +1,6 @@
 ---
 name: setup-skills
-description: Configure this repo: issue tracker, triage label vocabulary, and domain doc layout. Run once before the other engineering skills.
+description: "Configure this repo: issue tracker, triage label vocabulary, and domain doc layout. Run once before the other engineering skills."
 disable-model-invocation: true
 ---
 

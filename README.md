@@ -1,87 +1,79 @@
 # Skill Cook
 
-28 Claude Code skills for **analytics engineering** — SQL, dbt and Snowflake —
-wired to **GitHub, Jira, or local** issue tracking. Drop the `skills/` folder
-into `.claude/` and go.
+Claude Code skills for analytics engineering, wired to GitHub, Jira, or local issue tracking.
+
+**Six skills install by default.** That is deliberate: a skill library you can hold in your head gets used, and one with thirty entries gets ignored. Another 22 sit in `extras/` and install by name whenever you want them.
 
 ## Install
 
-**Personal (all your projects):**
 ```bash
-./install.sh
+./install.sh          # macOS, Linux, Git Bash
 ```
 ```powershell
-.\install.ps1
+.\install.ps1         # Windows PowerShell
 ```
 
-**One project only:**
-```bash
-./install.sh --project /path/to/project
-```
+Start a new Claude Code session, then type `/grill-me`. If it autocompletes, it worked.
 
-**Just a few, to start:**
-```bash
-./install.sh grill-me wait-what dbt-test
-```
+| Want | Command |
+| --- | --- |
+| The starter six | `./install.sh` |
+| One project only | `./install.sh --project /path/to/repo` |
+| Something from extras | `./install.sh wayfinder to-spec` |
+| See every name | `./install.sh --list` |
+| All 28 | `./install.sh --all` |
 
-Run `./install.sh --list` to see every name. Add the always-on Karpathy rules separately if you want them: `cp CLAUDE.md ~/.claude/CLAUDE.md` (see the note below).
+Re-run it any time to add more. PowerShell takes the same arguments (`-Project`, `-List`, `-All`).
 
-Start a new Claude Code session, then type `/grill-me`. If it autocompletes, the install worked.
+## The starter six
 
-> **Heads-up:** installing `code-review` shadows Claude Code's built-in `/code-review`. Delete `~/.claude/skills/code-review` to get the built-in back, or leave it out of the install.
+Nothing here needs setup, and none of it writes to your repo unless you ask it to.
 
-> **First run:** `/setup-skills` configures the issue tracker (GitHub, Jira, or local markdown), triage labels, and doc layout the engineering skills expect. Run it once per repo.
-
-> **`CLAUDE.md` vs `karpathy-guidelines`:** the same Karpathy rules exist in two forms. The root `CLAUDE.md` is **always-on** (costs tokens every turn); the `karpathy-guidelines` skill is **on-demand**. Use one or the other, not both.
-
-## Skills
-
-> **📖 See [SKILLS.md](SKILLS.md)** for the full catalog — what each skill does, when to reach for it, invocation type, and how they chain together.
-
-Organized into two folders for navigation. **Claude Code does not discover skills recursively:** it looks for `<skills-dir>/<skill-name>/SKILL.md`, exactly one level deep. That is why the install script flattens these buckets rather than copying them across as-is. Once installed, invocation is always by the skill's own name (`/dbt-test`, etc.), and the bucket is invisible.
-
-```
-skills/
-├── engineering/     # build, review, data modeling, git, coding guidelines
-└── productivity/    # thinking, writing, comms, working style
-```
-
-### `skills/engineering/` (20)
 | Skill | What it does |
-|---|---|
-| `which-skill` | Router — asks which skill or flow fits your situation. |
-| `setup-skills` | One-time repo config: issue tracker (GitHub/Jira/local), triage labels, doc layout. |
-| `code-review` | Reviews changes since a fixed point on Standards + Spec axes, in parallel sub-agents. |
-| `dbt-model-design` | Vocabulary for designing dbt models: grain, layering (staging/intermediate/marts), materialization, DRY. |
-| `dbt-test` | dbt data-testing strategy: grain tests, generic/singular/unit tests, source freshness. |
-| `dbt-project-audit` | Scan a dbt project for structure/test/cost issues → visual HTML report → grill. |
-| `diagnosing-bugs` | Diagnosis loop for hard bugs and failing models/queries. |
-| `domain-modeling` | Build/sharpen a project's domain model (CONTEXT.md, ADRs). |
-| `grill-with-docs` | Relentless interview to sharpen a plan; produces ADRs + glossary. |
-| `implement` | Implement work from a spec or set of tickets (drives `dbt-test`, then `code-review`). |
-| `prototype` | Build a throwaway prototype to answer a design question. |
-| `research` | Investigate against primary sources, capture findings as Markdown. |
-| `resolving-merge-conflicts` | Resolve an in-progress git merge/rebase conflict. |
-| `to-spec` | Turn the conversation into a spec, publish to the tracker. |
-| `to-tickets` | Break a plan/spec into tracer-bullet tickets with blocking edges. |
-| `triage` | Move issues/PRs through a triage state machine into agent-ready briefs. |
-| `wayfinder` | Plan huge work as a map of decision tickets, resolved one at a time. |
-| `wizard` | Generate an interactive bash wizard for human-only steps. |
-| `git-guardrails-claude-code` | Hooks to block dangerous git commands before they run. |
-| `karpathy-guidelines` | Reduce common LLM coding mistakes (on-demand form of `CLAUDE.md`). |
+| --- | --- |
+| `/grill-me` | Interviews you about a plan until every open decision is settled. The one to try first. |
+| `/grill-with-docs` | Same interview, but inside a repo, writing a `CONTEXT.md` glossary and ADRs as decisions land. |
+| `/wait-what` | That last answer did not land. Re-pitches it in plain English. Seven lines, zero risk, the fastest way to see what a skill is. |
+| `/handoff` | Running low on context? Writes a handoff document so a fresh session can pick the work up. |
+| `grilling` | The interview engine behind the two grill skills. Not typed directly. |
+| `domain-modeling` | Keeps `CONTEXT.md` and ADRs honest. Reached by `/grill-with-docs`. |
 
-### `skills/productivity/` (8)
-| Skill | What it does |
-|---|---|
-| `grill-me` | Relentless interview to sharpen a plan or design. |
-| `grilling` | Stress-test your thinking about a plan, decision, or idea. |
-| `handoff` | Compact the conversation into a handoff doc for another agent. |
-| `teach` | Teach you a new skill or concept in this workspace. |
-| `to-questionnaire` | Turn a decision you can't answer into a questionnaire for someone else. |
-| `wait-what` | "That last message didn't land" — re-pitch it. |
-| `writing-for-agents` | Writing docs for agents (skills, AGENTS.md, CLAUDE.md). |
-| `i-have-adhd` | Lead with the next action, number steps, restate state, make wins visible. `/i-have-adhd` … "stop adhd mode". |
+The last two carry no slash of their own; the first four call them.
+
+## Extras
+
+Everything else lives in `extras/`, grouped for browsing. It is held back rather than removed: the spec-and-ticket flow, dbt skills, debugging discipline, and the writing tools are all there and all one command away.
+
+See **[SKILLS.md](SKILLS.md)** for the full catalog, and **[TEAM-GUIDE.md](TEAM-GUIDE.md)** if you are new to skills.
+
+A few worth knowing about before you install them:
+
+- `/to-spec`, `/to-tickets`, `/triage`, `/wayfinder` need `/setup-skills` run once in that repo first, to record which issue tracker it uses.
+- `code-review` overrides Claude Code's built-in `/code-review`. The installer says so when it applies.
+- `git-guardrails-claude-code` writes hooks into your Claude Code settings.
+- `karpathy-guidelines` is the on-demand twin of this repo's `CLAUDE.md`. Use one or the other, never both.
+
+## Layout
+
+```
+skills/          installed by default, one folder per skill
+extras/          everything else, grouped into engineering/ and productivity/
+install.sh       installer (bash)
+install.ps1      installer (PowerShell)
+CLAUDE.md        optional always-on coding rules
+```
+
+`skills/` is flat on purpose. **Claude Code discovers skills at exactly one level:** `<skills-dir>/<skill-name>/SKILL.md`. It does not recurse, so a folder of folders installs as nothing. `extras/` keeps its grouping only because the installer flattens on the way in.
+
+## `CLAUDE.md`
+
+Optional, and separate from the skills. It holds always-on rules that reduce common LLM coding mistakes: state your assumptions, keep it simple, make surgical changes, define success criteria. Unlike a skill, it costs tokens on every turn.
+
+```bash
+cp CLAUDE.md ~/.claude/CLAUDE.md          # all your projects
+cp CLAUDE.md /path/to/project/CLAUDE.md   # one project
+```
 
 ## Licenses
 
-MIT. Derived from [mattpocock/skills](https://github.com/mattpocock/skills), [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills), and [i-have-adhd](https://github.com/ayghri/i-have-adhd) — see [LICENSE](LICENSE).
+MIT. Derived from [mattpocock/skills](https://github.com/mattpocock/skills), [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills), and [i-have-adhd](https://github.com/ayghri/i-have-adhd). See [LICENSE](LICENSE).

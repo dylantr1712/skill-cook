@@ -8,17 +8,21 @@ Claude Code discovers skills at exactly ONE level below a skills directory:
     ~/.claude/skills/<skill-name>/SKILL.md       personal, all your projects
     <repo>/.claude/skills/<skill-name>/SKILL.md  one project only
 
-This repo groups skills into engineering/ and productivity/ for navigation, so
-copying skills/* straight across would install two folders named after the
-buckets and nothing would load. This script flattens them.
+skills/ holds the starter set and is what you get by default.
+extras/ holds the rest, grouped into folders for browsing. Nothing in extras/
+installs unless you name it (or pass -All).
 
 .EXAMPLE
 .\install.ps1
-Install everything, for all your projects.
+The starter set, for all your projects.
 
 .EXAMPLE
-.\install.ps1 grill-me wait-what dbt-test
-Install only the named skills.
+.\install.ps1 -All
+Everything, starter set plus extras.
+
+.EXAMPLE
+.\install.ps1 code-review wayfinder
+Only the named skills, from either place.
 
 .EXAMPLE
 .\install.ps1 -Project C:\work\our-warehouse
@@ -32,17 +36,34 @@ Show what is available, install nothing.
 param(
     [string]$Project,
     [switch]$List,
+    [switch]$All,
     [Parameter(ValueFromRemainingArguments = $true)][string[]]$Skills
 )
 
 $ErrorActionPreference = 'Stop'
 
-$sourceDirs = Get-ChildItem -Path (Join-Path $PSScriptRoot 'skills') -Filter 'SKILL.md' -Recurse -File |
-    ForEach-Object { $_.Directory }
+function Get-SkillDirs([string]$Path) {
+    if (-not (Test-Path $Path)) { return @() }
+    Get-ChildItem -Path $Path -Filter 'SKILL.md' -Recurse -File | ForEach-Object { $_.Directory }
+}
+
+$starter = Get-SkillDirs (Join-Path $PSScriptRoot 'skills')
+$extra   = Get-SkillDirs (Join-Path $PSScriptRoot 'extras')
 
 if ($List) {
-    $sourceDirs | ForEach-Object { $_.Name } | Sort-Object
+    Write-Host "Starter set (installed by default):"
+    $starter | ForEach-Object { $_.Name } | Sort-Object | ForEach-Object { Write-Host "  $_" }
+    Write-Host ""
+    Write-Host "Extras (install by name, or with -All):"
+    $extra | ForEach-Object { $_.Name } | Sort-Object | ForEach-Object { Write-Host "  $_" }
     exit 0
+}
+
+# Default installs the starter set only. Naming skills, or -All, opens up extras.
+if ($All -or $Skills) {
+    $sourceDirs = @($starter) + @($extra)
+} else {
+    $sourceDirs = @($starter)
 }
 
 if ($Project) {
@@ -53,14 +74,11 @@ if ($Project) {
 New-Item -ItemType Directory -Force -Path $dest | Out-Null
 
 $installed = 0
-$skipped = 0
 $replaced = @()
+$found = @()
 
 foreach ($dir in $sourceDirs) {
-    if ($Skills -and ($Skills -notcontains $dir.Name)) {
-        $skipped++
-        continue
-    }
+    if ($Skills -and ($Skills -notcontains $dir.Name)) { continue }
 
     $target = Join-Path $dest $dir.Name
     $targetSkill = Join-Path $target 'SKILL.md'
@@ -74,22 +92,36 @@ foreach ($dir in $sourceDirs) {
     if (Test-Path $target) { Remove-Item -Recurse -Force $target }
 
     Copy-Item -Recurse -Path $dir.FullName -Destination $target
+    $found += $dir.Name
     $installed++
 }
 
+# A name that matched nothing is almost always a typo, and silence would hide it.
+if ($Skills) {
+    foreach ($w in $Skills) {
+        if ($found -notcontains $w) {
+            Write-Warning "No skill named '$w'. Run .\install.ps1 -List to see the names."
+        }
+    }
+}
+
 Write-Host "Installed $installed skill(s) into $dest"
-if ($skipped -gt 0) { Write-Host "Skipped $skipped not named on the command line." }
 
 if ($replaced.Count -gt 0) {
     Write-Host ""
-    Write-Host "Replaced an existing skill of the same name:"
+    Write-Host "Replaced a different skill of the same name:"
     $replaced | ForEach-Object { Write-Host "  $_" }
 }
 
 Write-Host ""
-Write-Host "Note: a skill installed here overrides a built-in Claude Code command of the"
-Write-Host "same name. This set includes ``code-review``, which shadows the bundled"
-Write-Host "/code-review. Delete $dest\code-review to get the built-in back."
-Write-Host ""
 Write-Host "Next: start a new Claude Code session, then type /grill-me"
 Write-Host "If it autocompletes, the install worked."
+Write-Host ""
+Write-Host "Add more later with .\install.ps1 <name>, or see them all with -List."
+
+# Only worth saying when it actually applies.
+if (Test-Path (Join-Path $dest 'code-review')) {
+    Write-Host ""
+    Write-Host "Heads-up: code-review overrides Claude Code's built-in /code-review."
+    Write-Host "Delete $dest\code-review to get the built-in back."
+}
