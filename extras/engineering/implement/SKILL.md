@@ -6,7 +6,7 @@ disable-model-invocation: true
 
 Implement the work described by the user in the spec or tickets.
 
-Use /dbt-test where possible: grain tests first, then the critical business rules.
+Test as you go, at seams agreed up front: assert the grain first, then the critical business rules.
 
 Run typechecking regularly, single test files regularly, and the full test suite once at the end.
 

@@ -1,116 +1,93 @@
-# Claude Code Skills — Team Guide
+# Claude Code Skills: Team Guide
 
-A shared library of **28 reusable workflows** for Claude Code, tuned for our analytics-engineering stack (SQL · dbt · Snowflake) and our tooling (GitHub, Jira).
+Six skills, about ten minutes to get going. No prior experience with skills needed.
 
-## What is a "skill"?
+## What is a skill?
 
-A skill is a saved instruction set that Claude Code loads on demand. Instead of re-explaining how we test a dbt model or how we write a ticket, you type `/dbt-test` and Claude follows the agreed process. Think of them as **team conventions Claude can actually execute** — not snippets, but workflows.
+A skill is a saved instruction set that Claude Code loads on demand. Instead of re-explaining how you want something done, you type `/grill-me` and Claude follows an agreed process.
 
-Two kinds:
-- **`/slash`** — you invoke it deliberately (15 of them)
-- **auto** — Claude may pull it in when the task matches (13 of them)
+Think of them as team conventions Claude can actually execute. Not snippets, workflows.
 
-## Why we have this
+You invoke these by typing them. Claude does not fire them at you unannounced.
 
-Most Claude Code skill libraries are written for app developers — TypeScript, unit tests, package boundaries. This one has been rewritten for **our** work: dbt model design, data testing, project audits, and our Athena/Qlik → Snowflake/dbt migration. The generic engineering workflows (specs, tickets, triage, code review) were kept and pointed at GitHub/Jira.
-
-## Install (2 minutes)
+## Install
 
 ```bash
 git clone <this-repo> && cd "Skill Cook"
-cp -r skills/* ~/.claude/skills/
+./install.sh                    # macOS, Linux, Git Bash
+```
+```powershell
+.\install.ps1                   # Windows PowerShell
 ```
 
-Restart Claude Code. Then in any repo, run `/setup-skills` **once** — it configures which issue tracker that repo uses (GitHub, Jira, or local files) and where docs live.
+Start a new Claude Code session and type `/grill-me`. If it autocompletes, you are done.
 
-Lost at any point? Type `/which-skill` and it'll route you.
+That installs six skills. Nothing else changes, nothing needs configuring, and none of them touch your repo unless you ask.
 
----
+## Try this first
 
-# Engineering skills (20)
+Pick a piece of work you are about to start and have not fully thought through. Then:
 
-### Getting started
-| Skill | Summary |
-|---|---|
-| `/which-skill` | Router — tells you which skill fits your situation. |
-| `/setup-skills` | One-time repo setup: issue tracker, triage labels, doc layout. |
+```
+/grill-me
+```
 
-### The core loop — idea to shipped
-| Skill | Summary |
-|---|---|
-| `/grill-with-docs` | Interviews you to sharpen a vague idea, writing ADRs + glossary as you go. |
-| `/to-spec` | Turns the conversation you just had into a written spec on the tracker. |
-| `/to-tickets` | Splits a spec into small tickets, each declaring what blocks it. |
-| `/implement` | Builds one ticket — tests first, then a review before commit. |
-| `/code-review` | Reviews a branch/PR on two axes at once: our standards, and the spec. |
+Claude will interview you about it, one round of numbered questions at a time, each with its recommended answer. Keep going until it runs out of questions.
 
-### dbt & data modeling
-| Skill | Summary |
-|---|---|
-| `/dbt-model-design` | The vocabulary for model design: grain, layering, materialization, DRY. |
-| `/dbt-test` | What to test and how: grain tests first, then business rules and freshness. |
-| `/dbt-project-audit` | Scans the whole project for untested grains, bad layering, and cost smells → HTML report. |
+Most people find it surfaces two or three decisions they had not noticed they were making. That is the whole point: the expensive mistake is not bad code, it is building the right thing badly understood.
 
-### When something comes up
-| Skill | Summary |
-|---|---|
-| `/triage` | Turns raw incoming issues into properly specified, ready-to-work tickets. |
-| `/diagnosing-bugs` | For hard bugs and slow queries — builds a reliable repro before theorising. |
-| `/wayfinder` | For efforts too big for one session — maps the unknowns and resolves them one by one. |
+If any answer Claude gives you does not land, type `/wait-what` and it will re-pitch in plain English.
 
-### Supporting
-| Skill | Summary |
-|---|---|
-| `/domain-modeling` | Keeps our terminology straight; records decisions as ADRs. |
-| `/research` | Sends a background agent to research a question against primary sources. |
-| `/prototype` | Throwaway code to answer one design question. |
-| `/resolving-merge-conflicts` | Works a merge/rebase conflict by intent, hunk by hunk. |
-| `/wizard` | Generates a guided script for steps only a human can do (credentials, dashboards). |
-| `/git-guardrails-claude-code` | Blocks dangerous git commands before they run. |
-| `/karpathy-guidelines` | Rules that stop Claude over-engineering or changing code you didn't ask about. |
+## The six
 
----
+| Skill | Reach for it when |
+| --- | --- |
+| `/grill-me` | You are about to build something and the plan is still fuzzy. Works anywhere, saves nothing. |
+| `/grill-with-docs` | Same, but inside a repo. It also builds a `CONTEXT.md` glossary of our terms and records decisions as ADRs, so the next session starts informed. |
+| `/wait-what` | An answer did not land. Stops everything and re-pitches it plainly. |
+| `/handoff` | The session is getting long or you are stopping for the day. Writes a handoff doc a fresh session can resume from. |
 
-# Productivity skills (8)
+Two more install alongside these but are not typed directly: `grilling` (the interview engine) and `domain-modeling` (keeps the glossary honest). The four above call them.
 
-### Thinking things through
-| Skill | Summary |
-|---|---|
-| `/grilling` | The interview engine other skills use — stress-tests your reasoning. |
-| `/grill-me` | Same interview, but saves nothing. For plans and decisions outside a repo. |
+Once these feel natural, [SKILLS.md](SKILLS.md#flows) has worked examples of chaining them: a vague dashboard ticket, a reconciliation mismatch, inheriting an undocumented model, and a migration too big to see the end of.
 
-### Sessions &amp; docs
-| Skill | Summary |
-|---|---|
-| `/handoff` | Writes a handoff doc so another session (or person) can pick up your work. |
-| `/wait-what` | "That didn't make sense" — makes Claude re-explain in plain English. |
-| `/writing-for-agents` | How to write docs that agents read well (CLAUDE.md, skills, runbooks). |
+### Why the glossary matters
 
-### Learning & comms
-| Skill | Summary |
-|---|---|
-| `/teach` | Teaches you a concept across sessions, tracking what you've learned. |
-| `/to-questionnaire` | Writes a questionnaire when the answer lives in someone else's head. |
-| `/i-have-adhd` | Answer-first, numbered, no filler output. Invoke at the start of a session. |
+`/grill-with-docs` writes a `CONTEXT.md`: a short glossary of the terms a project actually uses. It sounds like busywork, and it is the highest-leverage thing here.
 
----
+Without it, you spend a sentence every session explaining what a term means. With it, you say the word. Claude also starts naming models, columns and tests consistently, because it has a vocabulary to be consistent with.
 
-## Where to start
+## When you want more
 
-**Your first week — three skills cover most of it:**
+Another 19 skills ship in `extras/`, held back so this page stays readable. They cover the spec-and-ticket workflow, triage and planning, a debugging discipline, and more.
 
-1. **`/dbt-test`** — next time you build a model, use it. Grain test first; it catches fan-out bugs before they reach a dashboard.
-2. **`/code-review`** — run it before you open a PR. It checks the change against both our conventions and the original ticket.
-3. **`/which-skill`** — when you're not sure there's a skill for what you're doing.
+```bash
+./install.sh --list             # see every name
+./install.sh diagnosing-bugs    # add one
+```
 
-**Then, when the situation arises:** `/dbt-project-audit` for a health check on a project, `/diagnosing-bugs` when something's broken, `/to-tickets` when a chunk of work needs splitting.
+You do not need to work out what depends on what. Naming a skill also installs whatever it calls, and the installer tells you what it added.
 
-## Notes
+Worth knowing before you reach for them:
 
-- Skills don't activate on their own at session start — including `/i-have-adhd`. Invoke what you want, when you want it.
-- These are **ours to change**. If a skill's process is wrong for how we work, edit its `SKILL.md` — that's the point of keeping them in a repo.
-- Full detail on any skill (including bundled reference files and how they chain): see [SKILLS.md](SKILLS.md).
+- `/to-spec`, `/to-tickets`, `/triage` and `/wayfinder` need `/setup-skills` run once in that repo first, so they know whether we are tracking work in GitHub, Jira, or local files.
+- `code-review` replaces Claude Code's built-in `/code-review`. The built-in is good; only take ours if you want the two-axis version.
+- `git-guardrails-claude-code` changes your Claude Code settings to block dangerous git commands.
 
-## Credits
+The full catalog, with what each one does and how they chain, is in [SKILLS.md](SKILLS.md).
 
-Adapted from three MIT-licensed sources: [mattpocock/skills](https://github.com/mattpocock/skills), [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills), and [i-have-adhd](https://github.com/ayghri/i-have-adhd). Rewritten here for analytics engineering.
+## Optional: always-on coding rules
+
+`CLAUDE.md` in this repo holds four rules that reduce common Claude mistakes: state assumptions instead of guessing, keep it simple, make surgical changes, define success criteria before starting.
+
+```bash
+cp CLAUDE.md ~/.claude/CLAUDE.md
+```
+
+Unlike a skill, this applies to every turn of every session, and costs tokens accordingly. Try the skills first and add this later if you want it.
+
+## If something does not work
+
+**Typed a slash command and nothing happened?** Start a new session; skills load at startup. If it still does not autocomplete, re-run the installer and check it reports six skills.
+
+**Not sure which to use?** There are only four you type. If in doubt, `/grill-me`.
