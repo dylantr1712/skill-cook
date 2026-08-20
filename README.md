@@ -20,10 +20,13 @@ Start a new Claude Code session, then type `/grill-me`. If it autocompletes, it 
 | The starter six | `./install.sh` |
 | One project only | `./install.sh --project /path/to/repo` |
 | Something from extras | `./install.sh wayfinder to-spec` |
+| Check the repo is internally consistent | `python scripts/check-connections.py` |
 | See every name | `./install.sh --list` |
 | All 25 | `./install.sh --all` |
 
 Re-run it any time to add more. PowerShell takes the same arguments (`-Project`, `-List`, `-All`).
+
+Naming a skill also installs whatever that skill calls. `./install.sh wayfinder` brings `grilling`, `domain-modeling`, `prototype` and `research` with it, because a skill whose dependencies are missing fails at the moment you try to use it. The installer says which ones it added and why.
 
 ## The starter six
 

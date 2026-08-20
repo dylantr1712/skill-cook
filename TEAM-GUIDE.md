@@ -66,6 +66,8 @@ Another 19 skills ship in `extras/`, held back so this page stays readable. They
 ./install.sh diagnosing-bugs    # add one
 ```
 
+You do not need to work out what depends on what. Naming a skill also installs whatever it calls, and the installer tells you what it added.
+
 Worth knowing before you reach for them:
 
 - `/to-spec`, `/to-tickets`, `/triage` and `/wayfinder` need `/setup-skills` run once in that repo first, so they know whether we are tracking work in GitHub, Jira, or local files.

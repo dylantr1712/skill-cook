@@ -62,6 +62,8 @@ flowchart LR
 
 `grilling` and `domain-modeling` are the engines: an interview discipline, and a glossary discipline. Several skills are wrappers that point them at a different problem. That is why both ship in the starter set even though you never type either.
 
+You never have to satisfy this graph by hand. Installing a skill by name pulls in everything it calls, so `./install.sh wayfinder` also brings `prototype` and `research`. Run `python scripts/check-connections.py` to verify the graph after editing any skill.
+
 ## The main flow: request to shipped
 
 ```
