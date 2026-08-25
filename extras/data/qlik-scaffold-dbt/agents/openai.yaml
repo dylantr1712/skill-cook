@@ -1,0 +1,5 @@
+interface:
+  display_name: "Qlik Scaffold dbt"
+  short_description: "Generate dbt models from an extraction spec"
+policy:
+  allow_implicit_invocation: false

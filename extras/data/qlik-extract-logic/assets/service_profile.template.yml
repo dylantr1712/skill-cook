@@ -1,0 +1,68 @@
+# <SERVICE> — service profile
+# Small, hand-corrected companion to model_spec.yml. Seeded from inventory.json;
+# the fields inventory cannot know (owners, schedules, app ids) are yours to fill.
+# publishes_qvds / consumes_external_qvds are what roll up into the estate
+# dependency graph, which is the migration sequencing order — keep them accurate.
+
+service: <SERVICE>                    # short code, e.g. PBB
+name: <full service name>             # e.g. Pregnancy, Birth and Baby
+repo: <REPO>_QLIK
+repo_commit: <sha at time of extraction>
+
+owner:
+  business: <team or role>
+  technical: <team or role>
+confluence: <url>
+jira_project: <key>
+
+apps:
+  - name: <APP>_DataModel
+    role: generator                   # generator | consumer
+    layer: silver
+    app_id: <qlik app guid>
+    qlik_sense_url: <url>
+    qlik_cloud_url: <url>
+    reload_schedule: <e.g. daily 04:00 AEST>
+    audience: internal                # internal | external | commonwealth | mixed
+  - name: <APP>_Internal
+    role: consumer
+    layer: gold
+    app_id: <qlik app guid>
+    audience: internal
+
+connections:
+  - name: <LIB CONNECT string, verbatim>
+    system: athena
+    environment: prod
+
+qvd_library:
+  root: "lib://QVDs Staging/<SERVICE>/data"
+  production_path: "lib://QVDs Staging/<SERVICE>/data/prod"
+  dev_mode_flag: vDevMode             # variable selecting prod vs dev leaf
+
+databases:
+  - raa_svcetl_<service>_prod_master_glue_db
+  - raa_svcetl_spo_prod_master_glue_db   # human-maintained reference data
+
+# --- estate edges ------------------------------------------------------------
+# Published QVDs other services may consume.
+publishes_qvds:
+  - name: <name>.qvd
+    entity: <entity name in model_spec.yml>
+    consumed_by: []                   # other services known to read it
+
+# QVDs read from another service's pipeline. Each is a hard sequencing
+# constraint: that service's silver must land before this service's gold.
+consumes_external_qvds:
+  - service: <SERVICE>
+    qvd: <name>.qvd
+    read_by: <APP>/<script>.qvs
+    note: <what it is used for>
+
+# --- migration status --------------------------------------------------------
+migration:
+  stage: extraction                   # extraction | dbt-build | parity | cutover | done
+  extraction_date: <YYYY-MM-DD>
+  metrics_exported: false             # true once qlik-export-metrics has run
+  parity_freeze_point: <qlik reload timestamp parity was measured against>
+  blocked_by: []                      # services that must migrate first

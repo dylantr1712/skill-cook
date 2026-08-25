@@ -1,0 +1,5 @@
+interface:
+  display_name: "Qlik Extract Logic"
+  short_description: "Extract .qvs logic into a migration spec"
+policy:
+  allow_implicit_invocation: false

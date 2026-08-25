@@ -1,0 +1,5 @@
+interface:
+  display_name: "Qlik Export Metrics"
+  short_description: "Pull master items out of Qlik apps"
+policy:
+  allow_implicit_invocation: false

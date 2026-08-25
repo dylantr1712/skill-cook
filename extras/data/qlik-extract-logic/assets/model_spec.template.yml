@@ -1,0 +1,169 @@
+# <SERVICE> — model spec
+# Contract: SPEC-SCHEMA.md. Enforced by scripts/validate_spec.py.
+#
+# Two rules that matter more than the rest:
+#   1. `expression` is VERBATIM from the script. Do not reformat, do not
+#      normalise dashes, do not fix the casing. Character-level fidelity is the
+#      whole point.
+#   2. Every column needs a `source`. Lineage is derived from these refs, so a
+#      missing one is a hole in the graph, not a cosmetic omission.
+#
+# Never write a key as `on:` and never leave a value as bare no/yes/on/off —
+# YAML 1.1 turns them into booleans. See the trap note in SPEC-SCHEMA.md.
+
+spec_version: 1
+service: <SERVICE>
+# The generator app this bundle covers. Must equal the folder name
+# under extraction/ . Confirm it with the operator; do not guess.
+generator: <SERVICE>_DataModel
+extracted_at: <YYYY-MM-DD>
+source_commit: <sha>
+
+# Which layers this spec claims to cover. Declare a staged delivery
+# honestly: [silver] now, [silver, gold] once the consumer apps are done.
+scope:
+  layers: [silver]
+  deferred_note: "Gold layer outstanding - see README.md."
+
+apps:
+  - name: <APP>_DataModel
+    layer: silver
+    app_id: <guid>
+    role: "Athena to QVD generator"
+
+# --- sources -----------------------------------------------------------------
+sources:
+  - id: <prefix>.<object>
+    system: athena                    # athena | qvd | inline | file
+    database: raa_svcetl_<service>_prod_master_glue_db
+    object: <object>
+    kind: view                        # table | view | qvd | seed
+    maintained_by: system             # system | human  ("human" = SharePoint-fed)
+    # opaque: true                    # set when a view definition is unavailable
+    # external_service: CIMS          # set when the input belongs to another service
+    notes: ""
+
+# --- entities ----------------------------------------------------------------
+entities:
+  - name: <entity>                    # for a QVD, the basename without .qvd
+    layer: silver                     # silver | gold
+    app: <APP>_DataModel
+    script: <NN>_<Name>.qvs
+    lines: "<first>-<last>"
+    artefact: "lib://QVDs Staging/<SERVICE>/data/prod/<entity>.qvd"
+    qlik_table: <Table_tbl>
+    grain: >
+      One row per <what>. State it as a sentence; "unknown" fails validation.
+    fan_out_risk: >
+      Whether joining this to its parent multiplies rows, and on which key.
+      "none - base fact" is a valid answer; blank is not.
+    row_expectation: ""
+    upstream: [<source id or entity>]
+    filters:
+      - "<row-scope applied on load, e.g. weekly rows newer than max(monthly)>"
+    columns:
+      - name: <column>
+        source: <prefix>.<object>.<column>   # or an entity ref, or derived/literal/generated
+        expression: "<verbatim>"
+        type: text
+        notes: ""
+
+      - name: <derived column>
+        source: derived
+        derived_from: [<entity>.<column>]    # required when source is derived
+        expression: "<verbatim>"
+
+      - name: <dual column>
+        source: derived
+        derived_from: [<entity>.<column>]
+        expression: "Dual(<label expr>, <sort expr>)"
+        dual:
+          label: "<what the user sees>"
+          sort_key: "<what it sorts by>"
+        notes: "Emit as two columns in dbt."
+
+# --- relationships -----------------------------------------------------------
+# The associative model made explicit. mechanism: qlik_association means there is
+# no join anywhere in the source — the link is a shared unqualified field name.
+relationships:
+  - from: <table>
+    to: <table>
+    join_keys: [<key>]                # a list. NEVER write this key as `on:`
+    cardinality: one_to_many          # one_to_one | one_to_many | many_to_many
+    mechanism: qlik_association       # qlik_association | explicit_join | mapping
+    app: <APP>
+    fan_out: true
+    join_sql: "LEFT JOIN … ON …"
+    notes: "Declared by Unqualify in <script>:<line>."
+
+# --- dimensions --------------------------------------------------------------
+dimensions:
+  - name: <dimension>
+    entity: <table>
+    app: <APP>
+    script: <script>.qvs
+    lines: "<first>-<last>"
+    expression: |
+      <verbatim, multi-line>
+    values: []
+    null_handling: "<what happens to blank and out-of-range input>"
+    variants:
+      - name: <near-identical sibling>
+        difference: "<what differs>"
+    notes: ""
+
+# --- metrics -----------------------------------------------------------------
+# Never guess an expression into `recovered`. If it is not in the script, it is a todo.
+metrics:
+  recovered:
+    - name: <metric>
+      entity: <entity>
+      script: <script>.qvs
+      lines: "<first>-<last>"
+      expression: "<verbatim>"
+      grain: "<per what>"
+      business_rule: "<the rule in plain English>"
+      thresholds: {}
+  todo:
+    - name: "<metric label as it appears>"
+      app: <APP>
+      evidence: "<script>.qvs:<line>"
+      likely_inputs: []
+      where_to_find: "app master items / chart expressions"
+
+# --- parameters --------------------------------------------------------------
+parameters:
+  - name: v<Name>
+    defined_in: "<APP>/<script>.qvs:<line>"
+    kind: watermark                   # watermark | path | flag | format | threshold
+    default: ""
+    computed_by: fn_<Name>
+    used_by: []
+    purpose: ""
+    dbt_target: var
+
+# --- calendar ----------------------------------------------------------------
+calendar:
+  fy_start_month: 7
+  first_week_day: 6                   # 6 = Sunday
+  broken_weeks: true
+  date_format: "YYYY-MM-DD"
+  timezone: "Australia/Sydney"
+  timezone_actually_applied: false    # true only if an expression reads it
+  script: 94a_calendar.qvs
+  variants: []
+  fields: []
+
+# --- dead code ---------------------------------------------------------------
+dead_code:
+  - artefact: "<path exactly as inventory.json reports it>"
+    script: <APP>/<script>.qvs
+    reason: ""
+    finding: <SERVICE>-X-001
+
+# --- lineage notes -----------------------------------------------------------
+# What column refs cannot express.
+lineage_notes:
+  - kind: association                 # association | eav | human_source | external | opaque
+    entity: <table>
+    detail: ""
